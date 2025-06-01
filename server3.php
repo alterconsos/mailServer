@@ -30,7 +30,7 @@ $mailerB = array(
  	'name' => '[Alterconsos B]',
  	'host'=> 'auth.smtp.1and1.fr',
  	'port' => '587',
- 	'username' => 'appli.hebdo@alterconsos.sportes.fr',
+ 	'username' => '...',
  	'secure' => 'tls',
  	// 'secure' => 'tls' or 'ssl' ; // (fac)
  	'auth' => true,
@@ -41,6 +41,43 @@ $mailers = array(
 	'A' => $mailerA,
  	'B' => $mailerB
 );
+
+$blacklist = ['vhouillon@sfr.fr',
+'leboeuf.christine@neuf.fr',
+'patriceregimbart@gmail.com',
+'jeanlouis.chace@sfr.fr',
+'nathalie.chace@sfr.fr',
+'lize.alice@neuf.fr',
+'tony2016@netc.fr',
+'peyrataud.laetitia@neuf.fr',
+'pasgwe@numericable.com',
+'martine.morera@numericable.fr',
+'martinferte@orange.fr',
+'ingrid.cros@numericable.com',
+'valy1903@sfr.fr',
+'haroun.hannifa@gmail.com',
+'f.clavagnier@gmail.com',
+'madalen.touret@gmail.com',
+'seb_theurel@yahoo.fr',
+'eetter@sfr.fr',
+'delphinerobaglia@sfr.fr',
+'lm0308@numericable.fr',
+'anne.verot@beauxartsparis.fr',
+'patricia.dasneves@sfr.fr',
+'jguerillot@sfr.fr',
+'mathieu.jourdan@netcourrier.com',
+'samarsy@inbox-group.com',
+'fpillot@noos.fr',
+'didier.pasquiet@sfr.fr',
+'ouly@free.fr',
+'gjuil@sfr.fr',
+'pascale10.rey@sfr.fr',
+'ram.lepeltier@sfr.fr',
+'daddiecool@aliceadsl.fr',
+'patrick.boumard2@wanadoo.fr',
+'daniele.bordessoule@neuf.fr',
+'denis.delrieu@legumesdesjours.fr'
+];
 
 $arg = $_POST;
 
@@ -57,7 +94,7 @@ if ($ok && isset($arg['mailer'])) {
  	$ok = false;
 
 // $smtp = isset($arg['smtp']);
-$smtp = $mailer[smtp];
+$smtp = $mailer['smtp'];
  
 if ($ok && isset($arg['to'])) {
  	$to = explode(",", $arg['to']);
@@ -107,20 +144,27 @@ if ($ok) {
  		$mail->From = $mailer['username'];
  		$mail->FromName = $mailer['name'];
  		for($x = 0; $x < count($to); $x++){
- 			$mail->addAddress($to[$x]); // Add a recipient
+			if (in_array($to[$x], $blacklist)) {
+				$ok = false;
+				$err = "KO : blacklist ".$to[$x];
+			} else {
+ 				$mail->addAddress($to[$x]); // Add a recipient
+			}
  		}
- 		$mail->Subject = $subject;
- 		$mail->isHTML(true); // Set email format to HTML
- 		
- 		$mail->Body = $text;
- 		
- 		$msg1 = $date . " " . $subject . " " . strlen($text) . "c " . $arg['to'];
- 		error_log($msg1);
- 		if(!$mail->send()) {
- 			$err = "KO : ".$mail->ErrorInfo;
- 		} else
- 			$err = "OK : ".$date;
-		
+
+		if ($ok) {
+			$mail->Subject = $subject;
+			$mail->isHTML(true); // Set email format to HTML
+			
+			$mail->Body = $text;
+			
+			$msg1 = $date . " " . $subject . " " . strlen($text) . "c " . $arg['to'];
+			error_log($msg1);
+			if(!$mail->send()) {
+				$err = "KO : ".$mail->ErrorInfo;
+			} else
+				$err = "OK : ".$date;
+		}
 
  	} catch (Exception $e) {
  		$err = "KO : ".$e->getMessage();
@@ -129,9 +173,9 @@ if ($ok) {
 
 if ($ok)
 	echo $err;
-else 
-	echo $date;
-  
-error_log($err);
+else {
+	echo $date." ".$err;
+	error_log($err);
+}
 
 ?>
