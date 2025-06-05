@@ -76,7 +76,9 @@ $blacklist = ['vhouillon@sfr.fr',
 'daddiecool@aliceadsl.fr',
 'patrick.boumard2@wanadoo.fr',
 'daniele.bordessoule@neuf.fr',
-'denis.delrieu@legumesdesjours.fr'
+'denis.delrieu@legumesdesjours.fr',
+'annouv@free.fr',
+'mathieu.jourdan@netcourrier.com'
 ];
 
 $arg = $_POST;
@@ -115,7 +117,9 @@ else
  
 date_default_timezone_set('Europe/Paris');
 $date = date('Y-m-d H:i:s', time());
- 
+
+$bl = false;
+
 if ($ok) {
  	try {
 		$mail = new PHPMailer;
@@ -146,6 +150,7 @@ if ($ok) {
  		for($x = 0; $x < count($to); $x++){
 			if (in_array($to[$x], $blacklist)) {
 				$ok = false;
+				$bl = true;
 				$err = "KO : blacklist ".$to[$x];
 			} else {
  				$mail->addAddress($to[$x]); // Add a recipient
@@ -171,10 +176,13 @@ if ($ok) {
  	}
 }
 
-if ($ok)
+if ($ok) {
 	echo $err;
-else {
-	echo $date." ".$err;
+} else {
+	if ($bl) 
+		echo "OK : ".$date." blacklist";
+	else
+		echo $date." ".$err;
 	error_log($err);
 }
 

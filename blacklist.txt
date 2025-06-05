@@ -32,4 +32,6 @@
 'daddiecool@aliceadsl.fr',
 'patrick.boumard2@wanadoo.fr',
 'daniele.bordessoule@neuf.fr',
-'denis.delrieu@legumesdesjours.fr'
+'denis.delrieu@legumesdesjours.fr',
+'annouv@free.fr',
+'mathieu.jourdan@netcourrier.com'
