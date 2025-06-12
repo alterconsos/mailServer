@@ -15,9 +15,6 @@
 'f.clavagnier@gmail.com',
 'madalen.touret@gmail.com',
 'seb_theurel@yahoo.fr',
-'eetter@sfr.fr',
-'delphinerobaglia@sfr.fr',
-'lm0308@numericable.fr',
 'anne.verot@beauxartsparis.fr',
 'patricia.dasneves@sfr.fr',
 'jguerillot@sfr.fr',
@@ -31,7 +28,11 @@
 'ram.lepeltier@sfr.fr',
 'daddiecool@aliceadsl.fr',
 'patrick.boumard2@wanadoo.fr',
-'daniele.bordessoule@neuf.fr',
 'denis.delrieu@legumesdesjours.fr',
 'annouv@free.fr',
 'mathieu.jourdan@netcourrier.com'
+
+// 'daniele.bordessoule@neuf.fr',
+// 'eetter@sfr.fr',
+// 'delphinerobaglia@sfr.fr',
+// 'lm0308@numericable.fr',
