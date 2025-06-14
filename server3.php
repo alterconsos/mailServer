@@ -148,7 +148,7 @@ if ($ok) {
  		$mail->From = $mailer['username'];
  		$mail->FromName = $mailer['name'];
  		for($x = 0; $x < count($to); $x++){
-			if (in_array($to[$x], $blacklist)) {
+			if (in_array(strtolower($to[$x]), $blacklist)) {
 				$ok = false;
 				$bl = true;
 				$err = "KO : blacklist ".$to[$x];
